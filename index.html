@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulaire Scolarité</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)),
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><text x="10" y="20" font-family="Arial" font-size="10" fill="%23dddddd">HTML5</text><text x="60" y="40" font-family="Arial" font-size="10" fill="%23dddddd">CSS3</text><text x="20" y="70" font-family="Arial" font-size="10" fill="%23dddddd">JS</text><text x="70" y="90" font-family="Arial" font-size="10" fill="%23dddddd">WEB</text></svg>');
+            background-size: 200px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, #3498db, #2ecc71);
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        h1::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(to right, #3498db, #2ecc71);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="date"],
+        input[type="password"],
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 16px;
+            transition: border 0.3s;
+        }
+
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        input[type="date"]:focus,
+        input[type="password"]:focus,
+        select:focus {
+            border-color: #3498db;
+            outline: none;
+            box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+        }
+
+        input[type="number"] {
+            max-width: 100px;
+        }
+
+        .matieres {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+        }
+
+        .matieres h3 {
+            margin-top: 0;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        .matieres-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .matiere-pair {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .error {
+            color: #e74c3c;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+
+        button {
+            background: linear-gradient(to right, #3498db, #2ecc71);
+            color: white;
+            border: none;
+            padding: 12px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            margin-top: 20px;
+            transition: all 0.3s;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        button:hover {
+            background: linear-gradient(to right, #2980b9, #27ae60);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .password-container {
+            position: relative;
+        }
+
+        .password-container button.generate-pwd {
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: auto;
+            padding: 12px 15px;
+            background: #f39c12;
+            margin-top: 0;
+            font-size: 14px;
+        }
+
+        .password-container button.generate-pwd:hover {
+            background: #e67e22;
+        }
+
+        .error-message {
+            color: #e74c3c;
+            font-size: 0.8em;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .input-error {
+            border-color: #e74c3c !important;
+        }
+    </style>
+    <script src="controle.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Formulaire de Scolarité</h1>
+        <form id="formulaire" action="ajout.php" method="POST" onsubmit="return validateForm()">
+            <div class="form-group">
+                <label for="nom">Nom :</label>
+                <input type="text" id="nom" name="nom" required pattern="[A-Za-zÀ-ÿ\s\-]+"
+                    title="Lettres uniquement (accents et espaces autorisés)">
+                <div id="nom-error" class="error"></div>
+            </div>
+            <div class="form-group">
+                <label for="prenom">Prénom :</label>
+                <input type="text" id="prenom" name="prenom" required pattern="[A-Za-zÀ-ÿ\s\-]+"
+                    title="Lettres uniquement (accents et espaces autorisés)">
+                <div id="prenom-error" class="error"></div>
+            </div>
+            <div class="form-group">
+                <label for="date_naissance">Date de naissance :</label>
+                <input type="date" id="date_naissance" name="date_naissance" required>
+            </div>
+
+            <div class="form-group">
+                <label for="annee_scolaire">Année Scolaire (2024-2025) :</label>
+                <select id="annee_scolaire" name="annee_scolaire" required>
+                    <option value="">-- Sélectionnez une année --</option>
+                    <option value="3SI">3SI</option>
+                    <option value="4SI">4SI</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="moyenne_annuelle">Moyenne Annuelle :</label>
+                <input type="text" id="moyenne_annuelle" name="moyenne_annuelle" class="moyenne-input" required>
+                <div class="error-message" id="moyenne_annuelle-error">La moyenne doit être entre 0 et 20</div>
+            </div>
+            <div class="matieres">
+                <h3>Moyennes par Matière</h3>
+                <div class="matieres-grid">
+                    <div class="matiere-pair">
+                        <label for="sti">STI :</label>
+                        <input type="text" id="sti" name="sti" class="moyenne-input" required>
+                        <div class="error-message" id="sti-error">La moyenne doit être entre 0 et 20</div>
+                    </div>
+                    <div class="matiere-pair">
+                        <label for="programmation">Programmation :</label>
+                        <input type="text" id="programmation" name="programmation" class="moyenne-input" required>
+                        <div class="error-message" id="programmation-error">La moyenne doit être entre 0 et 20</div>
+                    </div>
+                    <div class="matiere-pair">
+                        <label for="mathematiques">Mathématiques :</label>
+                        <input type="text" id="mathematiques" name="mathematiques" class="moyenne-input" required>
+                        <div class="error-message" id="mathematiques-error">La moyenne doit être entre 0 et 20</div>
+                    </div>
+                    <div class="matiere-pair">
+                        <label for="physique">Physique :</label>
+                        <input type="text" id="physique" name="physique" class="moyenne-input" required>
+                        <div class="error-message" id="physique-error">La moyenne doit être entre 0 et 20</div>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit">Soumettre</button>
+
+        </form>
+    </div>
+    <footer style="
+    text-align: center;
+    margin: 40px auto 0;
+    padding: 20px;
+    color: #2c3e50;
+    font-size: 0.9em;
+    border-top: 1px solid #eee;
+    max-width: 600px;">
+        <p>© 2025-2026 Mr. Guizani Taieb - Tous droits réservés</p>
+    </footer>
+
+</body>
+
+</html>
