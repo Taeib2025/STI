@@ -17,7 +17,7 @@ Professeur Principal Émérite Classe Exceptionnelle en Sciences Informatiques a
 - 📝 **Publications** : Co-auteur de manuels scolaires approuvés par le Ministère Tunisien de l'Éducation
 - 💡 **Mentorat** : Encadrement de projets étudiants primés aux Olympiades Nationales d'Informatique
 - 🏆 **Distinctions** : Prix d'Excellence Pédagogique (2018, 2021)
-- 📫 **Contact** : [Email professionnel] | [Téléphone institutionnel]
+- 📫 **Contact** : [guizanitaeib@gmailcom] | [+216 96785177]
 
 ### 🛠 Compétences Pédagogiques & Techniques :
 <a href="https://www.python.org" target="_blank"><img align="left" alt="Python" height="42px" src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg"></a>
